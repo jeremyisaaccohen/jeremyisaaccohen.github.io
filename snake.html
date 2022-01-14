@@ -52,6 +52,27 @@ var apple = {
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
+  
+// function to check snake out of bounds
+function isSnakeOutBounds() {
+   // wrap snake position horizontally on edge of screen
+  if (snake.x < 0 or snake.x >= canvas.width or snake.y < 0 or snake.y >= canvas.height) {
+    resetSnake();
+  }
+}
+  
+function resetSnake() {
+  snake.x = 160;
+  snake.y = 160;
+  snake.cells = [];
+  snake.maxCells = 4;
+  snake.dx = grid;
+  snake.dy = 0;
+
+  apple.x = getRandomInt(0, 25) * grid;
+  apple.y = getRandomInt(0, 25) * grid;
+
+}
 
 // game loop
 function loop() {
@@ -68,22 +89,6 @@ function loop() {
   // move snake by it's velocity
   snake.x += snake.dx;
   snake.y += snake.dy;
-
-  // wrap snake position horizontally on edge of screen
-  if (snake.x < 0) {
-    snake.x = canvas.width - grid;
-  }
-  else if (snake.x >= canvas.width) {
-    snake.x = 0;
-  }
-  
-  // wrap snake position vertically on edge of screen
-  if (snake.y < 0) {
-    snake.y = canvas.height - grid;
-  }
-  else if (snake.y >= canvas.height) {
-    snake.y = 0;
-  }
 
   // keep track of where snake has been. front of the array is always the head
   snake.cells.unshift({x: snake.x, y: snake.y});
@@ -112,21 +117,17 @@ function loop() {
       apple.x = getRandomInt(0, 25) * grid;
       apple.y = getRandomInt(0, 25) * grid;
     }
+    
+    // check snake collision out of bounds
+    isSnakeOutBounds();
+    
 
     // check collision with all cells after this one (modified bubble sort)
     for (var i = index + 1; i < snake.cells.length; i++) {
       
       // snake occupies same space as a body part. reset game
       if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-        snake.x = 160;
-        snake.y = 160;
-        snake.cells = [];
-        snake.maxCells = 4;
-        snake.dx = grid;
-        snake.dy = 0;
-
-        apple.x = getRandomInt(0, 25) * grid;
-        apple.y = getRandomInt(0, 25) * grid;
+        resetSnake();
       }
     }
   });
