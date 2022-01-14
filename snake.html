@@ -9,7 +9,7 @@
   }
 
   body {
-    background: black;
+    background: brown;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,17 +53,17 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
   
-// function resetGame() {
-//   snake.x = 160;
-//   snake.y = 160;
-//   snake.cells = [];
-//   snake.maxCells = 4;
-//   snake.dx = grid;
-//   snake.dy = 0;
+function resetGame() {
+  snake.x = 160;
+  snake.y = 160;
+  snake.cells = [];
+  snake.maxCells = 4;
+  snake.dx = grid;
+  snake.dy = 0;
 
-//   apple.x = getRandomInt(0, 25) * grid;
-//   apple.y = getRandomInt(0, 25) * grid;
-// }
+  apple.x = getRandomInt(0, 25) * grid;
+  apple.y = getRandomInt(0, 25) * grid;
+}
 
 // game loop
 function loop() {
@@ -143,17 +143,17 @@ function loop() {
     for (var i = index + 1; i < snake.cells.length; i++) {
       
       // snake occupies same space as a body part. reset game
-      if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-//         resetGame();
-          snake.x = 160;
-          snake.y = 160;
-          snake.cells = [];
-          snake.maxCells = 4;
-          snake.dx = grid;
-          snake.dy = 0;
+      if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {     
+        resetGame();
+//           snake.x = 160;
+//           snake.y = 160;
+//           snake.cells = [];
+//           snake.maxCells = 4;
+//           snake.dx = grid;
+//           snake.dy = 0;
 
-          apple.x = getRandomInt(0, 25) * grid;
-          apple.y = getRandomInt(0, 25) * grid;
+//           apple.x = getRandomInt(0, 25) * grid;
+//           apple.y = getRandomInt(0, 25) * grid;
       }
     }
   });
