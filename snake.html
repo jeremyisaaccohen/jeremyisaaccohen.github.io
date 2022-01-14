@@ -15,7 +15,7 @@
     justify-content: center;
   }
   canvas {
-    border: 1px solid blue;
+    border: 1px solid magenta;
   }
   </style>
 </head>
@@ -28,7 +28,17 @@ var context = canvas.getContext('2d');
 var grid = 16;
 var count = 0;
   
-// var score = new component("30px", "Consolas", "black", 280, 40, "text");
+var score = 0;
+  
+context.fillStyle = "red";
+context.fillRect(0, 0, 300, 150);
+context.clearRect(20, 20, 100, 50);
+  
+// function drawScore() {
+//     context.font = "16px Arial";
+//     context.fillStyle = "#0095DD";
+//     context.fillText("Score: "+score, 8, 20);
+// }
 
   
 var snake = {
