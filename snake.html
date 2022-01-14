@@ -9,7 +9,7 @@
   }
 
   body {
-    background: magenta;
+    background: black;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,8 +83,17 @@ function loop() {
 
   // snake wrapping is for casuals!
   if (snake.x < 0 or snake.x >= canvas.width or snake.y < 0 or snake.y >= canvas.height) {
-    resetGame();
-  }
+//     resetGame();
+    snake.x = 160;
+    snake.y = 160;
+    snake.cells = [];
+    snake.maxCells = 4;
+    snake.dx = grid;
+    snake.dy = 0;
+
+    apple.x = getRandomInt(0, 25) * grid;
+    apple.y = getRandomInt(0, 25) * grid;
+   }
   
 //   // wrap snake position horizontally on edge of screen
 //   if (snake.x < 0) {
@@ -135,7 +144,16 @@ function loop() {
       
       // snake occupies same space as a body part. reset game
       if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-        resetGame();
+//         resetGame();
+          snake.x = 160;
+          snake.y = 160;
+          snake.cells = [];
+          snake.maxCells = 4;
+          snake.dx = grid;
+          snake.dy = 0;
+
+          apple.x = getRandomInt(0, 25) * grid;
+          apple.y = getRandomInt(0, 25) * grid;
       }
     }
   });
