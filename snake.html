@@ -15,12 +15,12 @@
     justify-content: center;
   }
   canvas {
-    border: 1px solid magenta;
+    border: 1px solid blue;
   }
   </style>
 </head>
 <body>
-<canvas width="400" height="400" id="game"></canvas>
+<canvas width="500" height="500" id="game"></canvas>
 <script>
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
@@ -31,8 +31,8 @@ var count = 0;
 var score = 0;
   
 context.fillStyle = "red";
-context.fillRect(0, 0, 300, 150);
-context.clearRect(20, 20, 100, 50);
+context.fillRect(450, 450, 50, 50);
+// context.clearRect(20, 20, 100, 50);
   
 // function drawScore() {
 //     context.font = "16px Arial";
