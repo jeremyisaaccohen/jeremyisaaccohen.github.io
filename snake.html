@@ -6,6 +6,7 @@
 			h1   {color: indianred;}
 			p    {color: cornflowerblue;}
 		</style>
+	
   <h1> SCORE PLS </h1>
   <title> score! </title>
   <style>
@@ -15,7 +16,7 @@
   }
 
   body {
-    background: black;
+    background: blue;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,6 +29,18 @@
 <body>
 <canvas width="500" height="500" id="game"></canvas>
 <script>
+	
+var example = "<h1> A title in JS </h1>";
+
+function changeContent()
+{
+  document.getElementById("content").innerHTML = example;
+}
+<div id="content">
+
+</div>
+
+<button onClick="changeContent()">Click to change content</button>
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 
