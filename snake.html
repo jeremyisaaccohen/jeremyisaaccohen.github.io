@@ -7,8 +7,13 @@
 			p    {color: cornflowerblue;}
 		</style>
 	
-  <h1> SCORE PLS </h1>
-  <title> score! </title>
+  <canvas id="myScore" width="100" height=30">
+<!--    <h1> head PLS :  </h1>-->
+
+
+  </canvas>
+
+<!--  <title> score! </title>-->
   <style>
   html, body {
     height: 100%;
@@ -29,48 +34,46 @@
 <body>
 <canvas width="500" height="500" id="game"></canvas>
 <script>
-	
-// var example = "<h1> A title in JS </h1>";
 
-// function changeContent()
-// {
-//   document.getElementById("content").innerHTML = example;
-// }
-// <div id="content">
 
-// </div>
+var score = 0;
 
-// <button onClick="changeContent()">Click to change content</button>
+var scoreCanvas = document.getElementById('myScore');
+var scoreContext = scoreCanvas.getContext('2d');
+scoreContext.font = "16px Arial";
+scoreContext.fillStyle = "blue";
+
+
+
+function updateScore() {
+  scoreContext.clearRect(0,0, 100,30);
+  ++score;
+  scoreContext.fillStyle = "white";
+  scoreContext.fillText("score : " + score,20,20);
+
+}
+
+
+
+
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 
 var grid = 16;
 var count = 0;
-  
-var score = 0;
-  
-context.fillStyle = "red";
-context.fillRect(450, 450, 50, 50);
-// context.clearRect(20, 20, 100, 50);
-  
-// function drawScore() {
-//     context.font = "16px Arial";
-//     context.fillStyle = "#0095DD";
-//     context.fillText("Score: "+score, 8, 20);
-// }
 
-  
+
 var snake = {
   x: 160,
   y: 160,
-  
+
   // snake velocity. moves one grid length every frame in either the x or y direction
   dx: grid,
   dy: 0,
-  
+
   // keep track of all grids the snake body occupies
   cells: [],
-  
+
   // length of the snake. grows when eating an apple
   maxCells: 4
 };
@@ -84,7 +87,7 @@ var apple = {
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
-  
+
 function resetGame() {
   snake.x = 160;
   snake.y = 160;
@@ -92,6 +95,8 @@ function resetGame() {
   snake.maxCells = 4;
   snake.dx = grid;
   snake.dy = 0;
+  score = -1;
+  updateScore();
 
   apple.x = getRandomInt(0, 25) * grid;
   apple.y = getRandomInt(0, 25) * grid;
@@ -113,38 +118,21 @@ function loop() {
   snake.x += snake.dx;
   snake.y += snake.dy;
 
-//   // snake wrapping is for casuals!
-//   if (snake.x < 0 or snake.x >= canvas.width or snake.y < 0 or snake.y >= canvas.height) {
-// //     resetGame();
-//     snake.x = 160;
-//     snake.y = 160;
-//     snake.cells = [];
-//     snake.maxCells = 4;
-//     snake.dx = grid;
-//     snake.dy = 0;
 
-//     apple.x = getRandomInt(0, 25) * grid;
-//     apple.y = getRandomInt(0, 25) * grid;
-//    }
-  
   // wrap snake position horizontally on edge of screen
   if (snake.x < 0) {
     resetGame();
-//     snake.x = canvas.width - grid;
   }
   else if (snake.x >= canvas.width) {
     resetGame();
-//     snake.x = 0;
   }
-  
+
   // wrap snake position vertically on edge of screen
   if (snake.y < 0) {
     resetGame();
-//     snake.y = canvas.height - grid;
   }
   else if (snake.y >= canvas.height) {
     resetGame();
-//     snake.y = 0;
   }
 
   // keep track of where snake has been. front of the array is always the head
@@ -162,34 +150,26 @@ function loop() {
   // draw snake one cell at a time
   context.fillStyle = 'green';
   snake.cells.forEach(function(cell, index) {
-    
+
     // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
-    context.fillRect(cell.x, cell.y, grid-1, grid-1);  
+    context.fillRect(cell.x, cell.y, grid-1, grid-1);
 
     // snake ate apple
     if (cell.x === apple.x && cell.y === apple.y) {
       snake.maxCells++;
+      updateScore();
 
-      // canvas is 400x400 which is 25x25 grids 
+      // canvas is 400x400 which is 25x25 grids
       apple.x = getRandomInt(0, 25) * grid;
       apple.y = getRandomInt(0, 25) * grid;
     }
 
     // check collision with all cells after this one (modified bubble sort)
     for (var i = index + 1; i < snake.cells.length; i++) {
-      
-      // snake occupies same space as a body part. reset game
-      if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {     
-        resetGame();
-//           snake.x = 160;
-//           snake.y = 160;
-//           snake.cells = [];
-//           snake.maxCells = 4;
-//           snake.dx = grid;
-//           snake.dy = 0;
 
-//           apple.x = getRandomInt(0, 25) * grid;
-//           apple.y = getRandomInt(0, 25) * grid;
+      // snake occupies same space as a body part. reset game
+      if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+        resetGame();
       }
     }
   });
@@ -197,11 +177,11 @@ function loop() {
 
 // listen to keyboard events to move the snake
 document.addEventListener('keydown', function(e) {
-  // prevent snake from backtracking on itself by checking that it's 
+  // prevent snake from backtracking on itself by checking that it's
   // not already moving on the same axis (pressing left while moving
   // left won't do anything, and pressing right while moving left
   // shouldn't let you collide with your own body)
-  
+
   // left arrow key
   if (e.which === 37 && snake.dx === 0) {
     snake.dx = -grid;
